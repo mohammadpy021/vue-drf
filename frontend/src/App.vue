@@ -1,4 +1,4 @@
-<!-- <script>
+<script>
 // @ is an alias to /src
 import Nav from '@/components/Nav.vue'
 
@@ -6,18 +6,26 @@ export default {
   name: 'app',
   components: {
     Nav
+  },
+  mounted(){                          //after completely page loading 
+    this.$store.commit("onStart");
+  },
+  watch:{
+    $route(){                         //by chaning route this will happen,(no page refreshing we need)
+      this.$store.commit("onStart");
+    }
   }
 }
-</script> -->
-<script setup>
-import Nav from '@/components/Nav.vue'
 </script>
+<!-- <script setup>
+import Nav from '@/components/Nav.vue'
+</script> -->
 
 <template>
-    <router-link to="/profile">Profile</router-link>
+    <!-- <router-link to="/profile">Profile</router-link> -->
+    {{ $store.state }} 
+    
     <Nav />
-
-  
 
 
   <router-view/>
