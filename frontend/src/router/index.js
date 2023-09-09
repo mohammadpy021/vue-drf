@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 import Logout from '../views/Logout.vue'
 import store from '../store'
 const routes = [
@@ -35,6 +36,12 @@ const routes = [
     name: 'logout',
     component: Logout,
     meta: { loginRequired: true },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: { loginRidirect: true },
   },
 
 ]
