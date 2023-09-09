@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import DetailView from '../views/DetailView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
@@ -10,6 +11,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/article/:slug', //EX '/article/:year/:month/:day
+    name: 'detail',
+    component: DetailView
   },
   {//second way
     path: '/about',
