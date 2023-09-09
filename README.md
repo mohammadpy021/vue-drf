@@ -5,7 +5,7 @@ vue + django Rest Framework (DRF)
 # Vue
 #### install bootstrap popper.js jquery
 ```
-npm install bootstrap popper.js jquery --save-dev
+npm i
 ```
 
 
