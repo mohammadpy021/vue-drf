@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
-
+import store from '../store'
 const routes = [
   {
     path: '/',
@@ -21,17 +21,20 @@ const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: ProfileView
+    component: ProfileView,
+    meta: { loginRequired: true },
   },
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: { loginRidirect: true },
   },
   {
     path: '/logout',
     name: 'logout',
-    component: Logout
+    component: Logout,
+    meta: { loginRequired: true },
   },
 
 ]
@@ -39,6 +42,19 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+router.beforeEach((to, from) => {
+  if (to.meta.loginRequired && !store.state.isAuthenticated) {
+
+    return {
+      path: '/login',
+    }
+  }
+  else if(to.meta.loginRidirect && store.state.isAuthenticated){
+    return {
+      path: '/profile',
+    }
+  }
 })
 
 export default router
