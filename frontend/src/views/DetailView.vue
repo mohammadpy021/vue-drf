@@ -1,31 +1,72 @@
 <template>
-    <div class="article">
-{{this.$route.params}}
-      <h3>{{ article.title }}</h3>
-      <div> {{article.content }}</div>
-      <hr>
+  <div class="article col-lg-10 mx-auto">
+    {{ this.$route.params }}
+    <h3>{{ article.title }}</h3>
+    <div> {{ article.content }}</div>
+    <hr>
+    <div class="col-auto" v-if=$store.state.isAuthenticated>
+      <button type="submit" class="btn btn-warning mb-3" @click="edit=!edit">Edit</button>
+      <button type="submit" class="btn btn-danger mb-3 ms-1">Remove</button>
     </div>
-  </template>
-  
-  <script>
-  
-  
-  
-  export default {
-    name: 'ArticleView',
-    data(){
-      let articles = localStorage.getItem("articles")
-      articles = JSON.parse(articles)                 //convert it from string to json
-      let article = articles.find(
-        article => article.slug === this.$route.params.slug
-      )
-      return {
-        // articles : articles,
-        article : article
-      
-      }
+  </div>
+  <form class="col-lg-10 mx-auto mb-3 shadow p-4 rounded" @submit.prevent="doEdit" v-if="edit">
+    <h3> Add a new post</h3>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" v-model="title">
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" rows="3" v-model="description"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Content</label>
+      <textarea class="form-control" id="content" rows="3" v-model="content"></textarea>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-warning mb-3">Confirm Edit</button>
+    </div>
+  </form>
+</template>
+<script>
+
+export default {
+  name: 'ArticleView',
+  data() {
+    let articles = localStorage.getItem("articles")
+    articles = JSON.parse(articles)                 //convert it from string to json
+    let article = articles.find(
+      article => article.slug === this.$route.params.slug
+    )
+    return {
+      articles : articles, //check
+      article: article,
+      title: article.title,
+      description: article.description,
+      content: article.content,
+      edit:false
     }
-  
+  },
+  methods:{
+    doEdit(){
+      let index = this.articles.findIndex(
+      article => article.slug === this.$route.params.slug
+    )
+    this.articles[index] = {
+      title: this.title,
+      slug : this.title.replaceAll(" ", "-").toLowerCase(),
+      description: this.description,
+      content: this.content
+    }
+      let database = JSON.stringify(this.articles)
+      localStorage.setItem("articles", database)
+      this.article = this.articles[index]
+      this.$router.push(`/article/${this.article.slug}`) //redirect to the Edited article page
+      this.edit = false
+
+
+    }
   }
-  </script>
+}
+</script>
   
