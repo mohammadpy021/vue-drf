@@ -23,10 +23,10 @@ import Nav from '@/components/Nav.vue'
 
 <template>
     <!-- <router-link to="/profile">Profile</router-link> -->
-    {{ $store.state }} 
+    
     
     <Nav />
-
+    {{ $store.state }} 
   <router-view/>
 </template>
 
