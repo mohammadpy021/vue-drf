@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles', # required for serving swagger ui's css/js files
-
+    'api',
     'rest_framework',
-     'rest_framework.authtoken', #TokenAuthentication
+    'rest_framework.authtoken', #TokenAuthentication
     'djoser',
     'rest_framework_simplejwt',
-   'drf_yasg',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +134,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-    
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
 }
+
