@@ -6,7 +6,7 @@
     <hr>
     <div class="col-auto" v-if=$store.state.isAuthenticated>
       <button type="submit" class="btn btn-warning mb-3" @click="edit=!edit">Edit</button>
-      <button type="submit" class="btn btn-danger mb-3 ms-1">Remove</button>
+      <button type="submit" class="btn btn-danger mb-3 ms-1" @click="doRemove">Remove</button>
     </div>
   </div>
   <form class="col-lg-10 mx-auto mb-3 shadow p-4 rounded" @submit.prevent="doEdit" v-if="edit">
@@ -63,8 +63,15 @@ export default {
       this.article = this.articles[index]
       this.$router.push(`/article/${this.article.slug}`) //redirect to the Edited article page
       this.edit = false
-
-
+    },
+    doRemove(){
+      let index = this.articles.findIndex(
+      article => article.slug === this.$route.params.slug
+    )
+      this.articles.splice(index, 1) // splice wont gieve us "undefined"
+      let database = JSON.stringify(this.articles)
+      localStorage.setItem("articles", database)
+      this.$router.push('/') //redirect to Home page
     }
   }
 }

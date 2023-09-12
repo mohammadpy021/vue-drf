@@ -1,4 +1,5 @@
 <template>
+
     <div class="add">
         <form class="col-lg-5 mx-auto shadow p-4 rounded" @submit.prevent="doAdd">
             <h3> Add a new post</h3>
