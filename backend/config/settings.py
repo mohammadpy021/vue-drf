@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-$d3p+i_j-0#25mz1!!a)&wax@7ghejeq$3x8s3z@&u96h@e@+k
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",    #port of vue js
+    "http://127.0.0.1:8080",    #port of vue js
+]
 
 # Application definition
 
@@ -43,11 +46,13 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework_simplejwt',
     'drf_yasg',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+     "corsheaders.middleware.CorsMiddleware",               # must be before the line below
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

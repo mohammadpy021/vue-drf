@@ -9,7 +9,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     lookup_field = "slug"  #find by slug instead of ID
 
-    @action(detail=False, methods=['GET'],name="get_detial", url_path=r'id/(?P<pk>\w+)') #custom root for getting post by id
+    @action(detail=False, methods=['GET'],name="get_detial", url_path=r'id/(?P<pk>\w+)') #custom root for getting article by id
     def get_article(self, request, pk=None):
         queryset = self.queryset.filter(pk = pk )
         serializer = self.get_serializer(queryset, many=True)
