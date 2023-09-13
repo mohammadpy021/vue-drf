@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles', # required for serving swagger ui's css/js files
     'api',
+    # 'rest_framework_simplejwt',
     'rest_framework',
     'rest_framework.authtoken', #TokenAuthentication #Token Based Authentication
     'djoser',
-    'rest_framework_simplejwt',
     'drf_yasg',
     "corsheaders",
 ]
@@ -136,17 +136,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.TokenAuthentication',        #Token Based Authentication
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',        #Token Based Authentication
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ]
 }
 
-# SIMPLE_JWT = {
-#    'AUTH_HEADER_TYPES': ('JWT',),
-# }
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
 

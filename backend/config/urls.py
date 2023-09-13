@@ -45,7 +45,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/auth/', include('djoser.urls')),
-    path('api/auth/', include('djoser.urls.authtoken')), #Token Based Authentication
-    # path('api/auth/', include('djoser.urls.jwt')),       #JSON Web Token Authentication¶
+    path('api/auth/', include('djoser.urls.jwt')),       #JSON Web Token Authentication¶
+    # path('api/auth/', include('djoser.urls.authtoken')), #Token Based Authentication
     path('',include('api.urls')),
 ]
