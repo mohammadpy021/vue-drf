@@ -1,6 +1,8 @@
 <template>
-
-    <div class="add">
+    <div class="text-center mx-auto col-lg-5 alert alert-warning" v-if="error">
+        Couldn't create a new post
+    </div>
+    <div class="add" v-else>
         <form class="col-lg-5 mx-auto shadow p-4 rounded" @submit.prevent="doAdd">
             <h3> Add a new post</h3>
             <div class="mb-3">
@@ -22,22 +24,23 @@
     </div>
 </template>
 <script>
-
+import axios from 'axios'
 export default {
     name: 'AddView',
-    mounted(){                          //after completely page loaded
-        if(!this.$store.isAuthenticated){
+    mounted(){//after completely page loaded
+        if(!this.$store.state.isAuthenticated){
             this.$router.push("/login")
         }
     },
     data() {
-        let articles = localStorage.getItem("articles")
-        articles = JSON.parse(articles)
+        // let articles = localStorage.getItem("articles")
+        // articles = JSON.parse(articles)
         return {
-            articles: articles,
+            // articles: articles,
             title: '',
             description: '',
-            content: ''
+            content: '',
+            error: false,
         }
     },
     methods: {
@@ -48,10 +51,19 @@ export default {
             description: this.description,
             content: this.content
            }
-           this.articles.push(article)
-           let database = JSON.stringify(this.articles)
-           localStorage.setItem("articles", database)
-           this.$router.push(`/article/${article.slug}`) //redirect to the new article page
+           axios                                
+            .post(`/articles/`, article)
+            .then((response) => {
+            this.$router.push(`/article/${article.slug}`) //redirect to the new article page
+            })
+            .catch((e) => {
+                this.false = true
+            })
+        // this.$store.commit("login", `${this.username}:${this.password}`)
+        // this.$router.push("/profile")    
+        //    this.articles.push(article)
+        //    let database = JSON.stringify(this.articles)
+        //    localStorage.setItem("articles", database)
         }
     }
 

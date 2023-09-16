@@ -87,12 +87,11 @@ export default {
         this.passwordEM = ''
       }
       // console.log(this.username)
-      if (access) {        
-        axios                                 // /api/auth/token/login/ //TokenAuthentication
-            .post(`/api/auth/jwt/create/ `, {// /api/auth/jwt/create/ // JWT    
-                      username: this.username,
-                      password: this.password
-            })
+      if (access) {   
+        let user = {username: this.username,
+                      password: this.password}  
+        axios                                       // /api/auth/token/login/   //TokenAuthentication
+            .post(`/api/auth/jwt/create/ `, user )  // /api/auth/jwt/create/    // JWT         
             .then((response) => {
               let access_token = response.data.access   //JWT
               let refresh_token = response.data.refresh //JWT
