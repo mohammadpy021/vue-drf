@@ -1,12 +1,12 @@
 <template>
   <div class="home">
-   <article v-if="articles" v-for="article in articles" >
+   <article v-if="articles.length" v-for="article in articles" >
     <router-link :to="`/article/${article.slug}`" >{{ article.title }}| </router-link>
     <!-- <h3><a :href="`/article/${article.slug}`"> {{ article.title }} </a></h3> -->
     <div> {{article.description }}</div>
     <hr>
   </article>
-  <div class="alert alert-warning" v-if="!articles">
+  <div class="alert alert-warning" v-if="!articles.length">
   There is no post to show
   </div>
   </div>
@@ -50,6 +50,5 @@ export default {
     this.articles = response.data
             })
   }
-
 }
 </script>
