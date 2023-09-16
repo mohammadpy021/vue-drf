@@ -7,12 +7,14 @@ export default {
   components: {
     Nav
   },
-  mounted(){                          //after completely page loading 
-    this.$store.commit("onStart");
+  mounted(){                          //after completely page loaded
+    // this.$store.commit("onStart");
+        this.$store.dispatch("onStart");
   },
   watch:{
     $route(){                         //by chaning route this will happen,(no page refreshing we need)
-      this.$store.commit("onStart");
+      // this.$store.commit("onStart");
+            this.$store.dispatch("onStart");
     }
   }
 }

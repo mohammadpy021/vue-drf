@@ -44,6 +44,7 @@
   </style>
   
   <script>
+import axios from 'axios'
   export default {
     name: 'Register',
     data() {
@@ -78,28 +79,28 @@
           this.usernameE = false
           this.usernameEM = ''
         }
-        if (this.password.length < 6) {
+        if (this.password.length < 8) {
           access = false
           this.passwordE = true
           if (this.password.length === 0) {
             this.passwordEM = "Password is required"
           }
           else {
-            this.passwordEM = "Password must be at least 6 characters"
+            this.passwordEM = "Password must be at least 8 characters"
           }
         }
         else {
           this.passwordE = false
           this.passwordEM = ''
         }
-        if (this.password2.length < 6) {
+        if (this.password2.length < 8) {
           access = false
           this.password2E = true
           if (this.password2.length === 0) {
             this.password2EM = "Repeat password  is required"
           }
           else {
-            this.password2EM = "Repeat password  must be at least 6 characters"
+            this.password2EM = "Repeat password  must be at least 8 characters"
           }
         }
         else if(this.password !== this.password2 ){
@@ -116,8 +117,31 @@
         }
         // console.log(this.username)
         if (access) {
-          this.$store.commit("login", `${this.username}:${this.password}`)
-          this.$router.push("/profile")
+          axios
+            .post(`/auth/users/`, {
+                      username: this.username,
+                      password: this.password
+            })
+            .then((response) => {
+              this.$router.push("/login")
+              // let access_token = response.data.access
+              // this.$store.commit("login", access_token)
+              // this.$router.push("/profile")
+            })
+            .catch((e) => {
+              if(e.response.data.username){
+                this.usernameE = true
+                this.usernameEM = e.response.data.username.join(" ")
+              }
+              else if (e.response.data.password){
+                console.log(e.response)
+                this.passwordE = true
+                this.password2E = true
+                this.passwordEM = e.response.data.password.join(" ")
+              }
+            })
+          // this.$store.commit("login", `${this.username}:${this.password}`)
+          // this.$router.push("/profile")
         }
       }
     }

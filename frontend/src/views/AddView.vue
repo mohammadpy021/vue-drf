@@ -25,6 +25,11 @@
 
 export default {
     name: 'AddView',
+    mounted(){                          //after completely page loaded
+        if(!this.$store.isAuthenticated){
+            this.$router.push("/login")
+        }
+    },
     data() {
         let articles = localStorage.getItem("articles")
         articles = JSON.parse(articles)
@@ -33,7 +38,6 @@ export default {
             title: '',
             description: '',
             content: ''
-
         }
     },
     methods: {

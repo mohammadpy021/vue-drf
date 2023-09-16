@@ -39,7 +39,9 @@
 </style>
 
 <script>
+import axios from 'axios'
 export default {
+
   name: 'Login',
   data() {
     return {
@@ -70,14 +72,14 @@ export default {
         this.usernameE = false
         this.usernameEM = ''
       }
-      if (this.password.length < 6) {
+      if (this.password.length < 3) {
         access = false
         this.passwordE = true
         if (this.password.length === 0) {
           this.passwordEM = "Password is required"
         }
         else {
-          this.passwordEM = "Password must be atleat 6 characters"
+          this.passwordEM = "Password must be atleat 3 characters"
         }
       }
       else {
@@ -85,14 +87,30 @@ export default {
         this.passwordEM = ''
       }
       // console.log(this.username)
-      if (access) {
-        this.$store.commit("login", `${this.username}:${this.password}`)
-        this.$router.push("/profile")
+      if (access) {        
+        axios                                 // /api/auth/token/login/ //TokenAuthentication
+            .post(`/api/auth/jwt/create/ `, {// /api/auth/jwt/create/ // JWT    
+                      username: this.username,
+                      password: this.password
+            })
+            .then((response) => {
+              let access_token = response.data.access   //JWT
+              let refresh_token = response.data.refresh //JWT
+              // let auth_token = response.data.auth_token //TokeeAuthentication
+              this.$store.commit("login", access_token)
+              this.$router.push("/profile")
+            })
+            .catch((e) => {
+              this.passwordE = true
+              this.usernameE = true
+              // this.usernameEM = e.response.data.non_field_errors //TokenAuthentication
+              this.usernameEM = e.response.data.detail
+                // console.log(e.response.status)
+            })
+        // this.$store.commit("login", `${this.username}:${this.password}`)
+        // this.$router.push("/profile")
       }
     }
   }
 }
 </script>
-
-
-
